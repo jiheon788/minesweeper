@@ -2,3 +2,15 @@
 @import './base/reset';
 @import './base/mixins';
 @import './base/variables';
+
+.wrapper {
+  height: 100vh;
+  @include center;
+}
+
+.button {
+  background-color: #777;
+  border: #333 solid 2px;
+  width: 2rem;
+  height: 2rem;
+}
