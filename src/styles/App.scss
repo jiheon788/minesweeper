@@ -9,8 +9,16 @@
 }
 
 .button {
-  background-color: #777;
-  border: #333 solid 2px;
   width: 2rem;
   height: 2rem;
+  border: $dark-color solid 2px;
+  background-color: $grey-color;
+
+  &:hover {
+    background: lighten($grey-color, 10%); // 색상 10% 밝게
+  }
+
+  &:active {
+    background: darken($grey-color, 10%); // 색상 10% 어둡게
+  }
 }
