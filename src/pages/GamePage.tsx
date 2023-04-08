@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { clickCell, initMap } from '@/store/slices/gameSlice';
-import { ModeMeta } from '@/meta/GameMeta';
+import { clickCell, initMap, startGame } from '@/store/slices/gameSlice';
+import { CellStatus, ModeMeta } from '@/meta/GameMeta';
+import { getNumOfMine, isClicked, isMine } from '@/utils/gameHelper';
+import Cell from '@/components/Cell';
 
 const GamePage = () => {
+  const [isStart, setIsStart] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { gameMap } = useAppSelector((state) => state.gameData);
   const dispatch = useAppDispatch();
@@ -12,7 +15,22 @@ const GamePage = () => {
   useEffect(() => {
     const mode = searchParams.get('mode');
     dispatch(initMap({ mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0] }));
+    setIsStart(false);
   }, [searchParams, dispatch]);
+
+  const onClickCell = (row: number, col: number) => {
+    const mode = searchParams.get('mode');
+    if (!isStart) {
+      dispatch(
+        startGame({
+          clickedXPos: row,
+          clickedYPos: col,
+          mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0],
+        }),
+      );
+      setIsStart(true);
+    }
+  };
 
   return (
     <>
@@ -38,25 +56,31 @@ const GamePage = () => {
               <tr key={row}>
                 {cells.map((cell, col) => {
                   return (
-                    <td key={`${row}x${col}`}>
-                      <button
-                        type="button"
-                        className="button"
-                        onClick={() => {
-                          const mode = searchParams.get('mode');
+                    <Cell
+                      key={`${row}x${col}`}
+                      row={row}
+                      col={col}
+                      text={isMine(cell) ? '💣' : getNumOfMine(gameMap, row, col)}
+                      onClickCell={onClickCell}
+                    />
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
 
-                          dispatch(
-                            clickCell({
-                              clickXPos: row,
-                              clickYPos: col,
-                              mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0],
-                            }),
-                          );
-                        }}
-                        onContextMenu={(e) => {
-                          e.preventDefault();
-                        }}
-                      >
+      <h1>Test</h1>
+      <table>
+        <tbody>
+          {gameMap.map((cells, row) => {
+            return (
+              <tr key={row}>
+                {cells.map((cell, col) => {
+                  return (
+                    <td key={`${row}x${col}`}>
+                      <button type="button" className="button">
                         {cell}
                       </button>
                     </td>

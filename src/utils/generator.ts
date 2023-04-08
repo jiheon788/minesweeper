@@ -9,14 +9,14 @@ export const generateGameMap = (width: number, height: number) => {
 export const generateRandomMine = (ratio: number) =>
   Math.random() <= ratio ? CellStatus.MINE_UNCLICKED : CellStatus.NORMAL_UNCLICKED;
 
-export const setRandomMine = (gameMap: number[][], clickedXPos: number, clickedYPos: number, ratio: number) => {
-  for (let x = 0; x < gameMap.length; x++) {
-    for (let y = 0; y < gameMap[0].length; y++) {
-      if (!(clickedXPos === x && clickedYPos === y)) {
-        gameMap[x][y] = generateRandomMine(ratio);
-      }
+export const generatePseudoMap = (gameMap: number[][]) => {
+  const pseudoMap = Array.from(Array(gameMap.length + 2), () => Array(gameMap.length + 2).fill(CellStatus.PSEUDO));
+
+  for (let row = 1; row < pseudoMap.length - 1; row++) {
+    for (let col = 1; col < pseudoMap[0].length - 1; col++) {
+      pseudoMap[row][col] = gameMap[row - 1][col - 1];
     }
   }
 
-  return gameMap;
+  return pseudoMap;
 };

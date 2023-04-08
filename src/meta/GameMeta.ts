@@ -1,9 +1,13 @@
 export const CellStatus = {
+  PSEUDO: -9,
+
   NORMAL_UNCLICKED: -2,
   MINE_UNCLICKED: -1,
+
   NORMAL_CLICKED: 0,
   MINE_CLICKED: 1,
-  FLAGED: 2,
+  NORMAL_FLAGED: 2,
+  MINE_FLAGED: 2,
 };
 
 export const ModeMeta = {
