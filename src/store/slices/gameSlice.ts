@@ -21,6 +21,7 @@ const gameSlice = createSlice({
       const { width, height } = actions.payload;
 
       state.gameMap = generateGameMap(width, height);
+      state.isStart = false;
     },
 
     /**
@@ -39,13 +40,12 @@ const gameSlice = createSlice({
      * 3. 지뢰 x, 인접 셀 지뢰 x
      */
     clickCell(state, action) {
-      const { clickPos } = action.payload;
+      const { clickXPos, clickYPos } = action.payload;
       if (!state.isStart) {
         console.log('setMIne');
-        state.gameMap = setRandomMine(state.gameMap, clickPos);
+        state.gameMap = setRandomMine(state.gameMap, clickXPos, clickYPos);
+        state.isStart = true;
       }
-      state.isStart = true;
-      return;
     },
 
     /**

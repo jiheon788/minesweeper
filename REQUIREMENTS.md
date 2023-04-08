@@ -9,8 +9,8 @@
   - [ ] 지뢰있으면 게임 fail
   - [ ] 지뢰 칸이 아니고 주변에 지뢰있으면 주변 지뢰 갯수 힌트
   - [ ] 지뢰 칸이 아니고 주변에 지뢰가 없으면 범위를 넓혀서 탐지 및 힌트 
-- [ ] 난이도 변경이 가능해야 합니다
-    - [ ] Beginner (8X8), Intermediate (16X16), Expert (32X16)
+- [x] 난이도 변경이 가능해야 합니다
+    - [x] Beginner (8X8), Intermediate (16X16), Expert (32X16)
 
 ## Optional Requirements
 - [ ] 게임 타이머 (게임 클리어 시간 확인)

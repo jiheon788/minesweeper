@@ -1,4 +1,4 @@
-import { CellStatus } from '@/meta/GameMeta';
+import { CellStatus, ModeMeta } from '@/meta/GameMeta';
 
 export const generateGameMap = (width: number, height: number) => {
   return Array(height)
@@ -6,14 +6,14 @@ export const generateGameMap = (width: number, height: number) => {
     .map(() => Array(width).fill(CellStatus.NORMAL_UNCLICK));
 };
 
-export const setRandomMine = (gameMap: number[][], clickPos: number[]) => {
-  console.log(clickPos);
-  const [x, y] = clickPos;
+export const generateRandomMine = () =>
+  Math.random() <= ModeMeta.BEGINNER.ratio ? CellStatus.MINE_UNCLICK : CellStatus.NORMAL_UNCLICK;
 
-  for (let i = 0; i < gameMap.length; i++) {
-    for (let j = 0; j < gameMap[0].length; j++) {
-      if (!(x === i && y === j)) {
-        gameMap[i][j] = Math.random() <= 0.1 ? CellStatus.MINE_UNCLICK : CellStatus.NORMAL_UNCLICK;
+export const setRandomMine = (gameMap: number[][], clickXPos: number, clickYPos: number) => {
+  for (let x = 0; x < gameMap.length; x++) {
+    for (let y = 0; y < gameMap[0].length; y++) {
+      if (!(clickXPos === x && clickYPos === y)) {
+        gameMap[x][y] = generateRandomMine();
       }
     }
   }
