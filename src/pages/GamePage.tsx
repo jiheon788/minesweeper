@@ -10,24 +10,19 @@ const GamePage = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const width = Number(searchParams.get('w'));
-    const height = Number(searchParams.get('h'));
-
-    dispatch(initMap({ width, height }));
-  }, [searchParams]);
+    const mode = searchParams.get('mode');
+    dispatch(initMap({ mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0] }));
+  }, [searchParams, dispatch]);
 
   return (
     <>
       <div>
         <select
           onChange={(e) => {
-            const MODE = e.target.value as keyof typeof ModeMeta;
-            if (MODE === 'CUSTOM') return;
-            searchParams.set('w', String(ModeMeta[MODE].width));
-            searchParams.set('h', String(ModeMeta[MODE].height));
-            searchParams.set('r', String(ModeMeta[MODE].ratio));
+            searchParams.set('mode', e.target.value.toLowerCase());
             setSearchParams(searchParams);
           }}
+          defaultValue={Object.keys(ModeMeta)[0]}
         >
           {Object.keys(ModeMeta).map((mode) => (
             <option key={mode} value={mode}>
@@ -48,7 +43,15 @@ const GamePage = () => {
                         type="button"
                         className="button"
                         onClick={() => {
-                          dispatch(clickCell({ clickXPos: row, clickYPos: col }));
+                          const mode = searchParams.get('mode');
+
+                          dispatch(
+                            clickCell({
+                              clickXPos: row,
+                              clickYPos: col,
+                              mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0],
+                            }),
+                          );
                         }}
                         onContextMenu={(e) => {
                           e.preventDefault();

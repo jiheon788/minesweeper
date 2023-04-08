@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { generateGameMap, setRandomMine } from '@/utils/generator';
+import { ModeMeta } from '@/meta/GameMeta';
 
 const initialState = {
   isStart: false,
@@ -18,7 +19,9 @@ const gameSlice = createSlice({
      * @description  초기 맵 생성 (기본값)
      */
     initMap(state, actions) {
-      const { width, height } = actions.payload;
+      const { mode } = actions.payload;
+      const width = ModeMeta[mode as keyof typeof ModeMeta].width;
+      const height = ModeMeta[mode as keyof typeof ModeMeta].height;
 
       state.gameMap = generateGameMap(width, height);
       state.isStart = false;
@@ -40,10 +43,12 @@ const gameSlice = createSlice({
      * 3. 지뢰 x, 인접 셀 지뢰 x
      */
     clickCell(state, action) {
-      const { clickXPos, clickYPos } = action.payload;
+      const { clickedXPos, clickedYPos, mode } = action.payload;
+      const ratio = ModeMeta[mode as keyof typeof ModeMeta].ratio;
+
       if (!state.isStart) {
         console.log('setMIne');
-        state.gameMap = setRandomMine(state.gameMap, clickXPos, clickYPos);
+        state.gameMap = setRandomMine(state.gameMap, clickedXPos, clickedYPos, ratio);
         state.isStart = true;
       }
     },
