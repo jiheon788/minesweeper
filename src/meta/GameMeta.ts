@@ -6,6 +6,7 @@ export const CellStatus = {
 
   NORMAL_CLICKED: 0,
   MINE_CLICKED: 1,
+
   NORMAL_FLAGED: 2,
   MINE_FLAGED: 2,
 };
@@ -17,3 +18,9 @@ export const ModeMeta = {
 };
 
 export type ModeType = keyof typeof ModeMeta;
+
+export const GameStatus = {
+  PROGRESS: '😀',
+  LOSE: '😂',
+  WIN: '🎉',
+};

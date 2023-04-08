@@ -16,8 +16,10 @@ const Cell = ({ row, col, text, onClickCell }: ICellProps) => {
         type="button"
         className="button"
         onClick={() => {
-          onClickCell(row, col);
-          setIsClick(true);
+          if (!isClick) {
+            onClickCell(row, col);
+            setIsClick(true);
+          }
         }}
         onContextMenu={(e) => {
           e.preventDefault();

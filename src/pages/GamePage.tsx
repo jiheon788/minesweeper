@@ -2,14 +2,14 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { clickCell, initMap, startGame } from '@/store/slices/gameSlice';
-import { CellStatus, ModeMeta } from '@/meta/GameMeta';
+import { CellStatus, GameStatus, ModeMeta } from '@/meta/GameMeta';
 import { getNumOfMine, isClicked, isMine } from '@/utils/gameHelper';
 import Cell from '@/components/Cell';
 
 const GamePage = () => {
   const [isStart, setIsStart] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
-  const { gameMap } = useAppSelector((state) => state.gameData);
+  const { gameMap, gameStatus } = useAppSelector((state) => state.gameData);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,8 +19,8 @@ const GamePage = () => {
   }, [searchParams, dispatch]);
 
   const onClickCell = (row: number, col: number) => {
-    const mode = searchParams.get('mode');
     if (!isStart) {
+      const mode = searchParams.get('mode');
       dispatch(
         startGame({
           clickedXPos: row,
@@ -30,11 +30,14 @@ const GamePage = () => {
       );
       setIsStart(true);
     }
+
+    dispatch(clickCell({ clickedXPos: row, clickedYPos: col }));
   };
 
   return (
     <>
       <div>
+        <button>{GameStatus[gameStatus as keyof typeof GameStatus]}</button>
         <select
           onChange={(e) => {
             searchParams.set('mode', e.target.value.toLowerCase());

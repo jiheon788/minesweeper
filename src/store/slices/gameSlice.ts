@@ -5,11 +5,9 @@ import { getNumOfMine, setRandomMine } from '@/utils/gameHelper';
 
 const initialState = {
   gameMap: [[0]],
+  gameStatus: 'PROGRESS',
 };
 
-/**
- * @summary 게임 관리 slice
- */
 const gameSlice = createSlice({
   name: 'gameData',
   initialState,
@@ -28,15 +26,16 @@ const gameSlice = createSlice({
     },
 
     clickCell(state, action) {
-      const { clickedXPos, clickedYPos, mode } = action.payload;
-      const ratio = ModeMeta[mode as keyof typeof ModeMeta].ratio;
-      console.log(getNumOfMine(state.gameMap, clickedXPos, clickedYPos));
+      const { clickedXPos, clickedYPos } = action.payload;
+
+      if (state.gameMap[clickedXPos][clickedYPos] === CellStatus.MINE_UNCLICKED) {
+        state.gameMap[clickedXPos][clickedYPos] = CellStatus.MINE_CLICKED;
+        state.gameStatus = 'LOSE';
+      } else {
+        state.gameMap[clickedXPos][clickedYPos] = CellStatus.NORMAL_CLICKED;
+      }
     },
 
-    /**
-     * @title endGame
-     * @description 리트라이
-     */
     endGame(state, actions) {
       return;
     },
