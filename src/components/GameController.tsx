@@ -6,7 +6,7 @@ import useQueryString from '@/hooks/useQueryString';
 import useInputs from '@/hooks/useInputs';
 
 const GameController = () => {
-  const { searchParams, getParams, setParams, deleteAllParams } = useQueryString();
+  const { searchParams, getParams, setParams } = useQueryString();
   const [gameConfig, onChangeGameConfig] = useInputs({
     width: CUSTOM_DEFAULT,
     height: CUSTOM_DEFAULT,
@@ -49,10 +49,7 @@ const GameController = () => {
           {GameStatus[gameStatus as keyof typeof GameStatus]}
         </button>
         <select
-          onChange={(e) => {
-            deleteAllParams();
-            setParams('mode', e.target.value.toLowerCase());
-          }}
+          onChange={(e) => setParams('mode', e.target.value.toLowerCase())}
           defaultValue={getParams('mode') ? getParams('mode').toUpperCase() : Object.keys(ModeMeta)[0]}
         >
           {Object.keys(ModeMeta).map((mode) => (

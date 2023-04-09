@@ -24,6 +24,9 @@ const gameSlice = createSlice({
   name: 'gameData',
   initialState,
   reducers: {
+    /**
+     * @summary 게임 초기화 및 셋팅
+     */
     initMap(state, action) {
       const { mode } = action.payload;
       const width = ModeMeta[mode as keyof typeof ModeMeta].width;
@@ -33,6 +36,9 @@ const gameSlice = createSlice({
       state.gameStatus = 'READY';
     },
 
+    /**
+     * @summary 게임 보드 사이즈, 지뢰 비율 조정 및 초기화
+     */
     customMap(state, action) {
       const { width, height, ratio } = action.payload;
       state.ratio = ratio;
@@ -40,12 +46,23 @@ const gameSlice = createSlice({
       state.gameStatus = 'READY';
     },
 
+    /**
+     * @summary 게임 시작 및 지뢰 세팅
+     */
     startGame(state, action) {
       const { clickedXPos, clickedYPos } = action.payload;
       state.gameMap = setRandomMine(state.gameMap, clickedXPos, clickedYPos, state.ratio);
       state.gameStatus = 'PROGRESS';
     },
 
+    /**
+     * @summary 셀 클릭 이벤트
+     * @branch 지뢰 클릭 -> 모든 셀 오픈 및 게임 종료
+     * @branch 현재 셀이 비어 있고 아직 드러나지 않았음 -> 재귀 탐색
+     * @branch 범위 밖인 경우 -> skip
+     * @branch 현재 셀의 경우  -> skip
+     * @branch 현재 셀이 값이 있고, 오픈되지않음 -> open
+     */
     clickCell(state, action) {
       const { clickedXPos, clickedYPos } = action.payload;
 
@@ -60,17 +77,13 @@ const gameSlice = createSlice({
           return;
         }
 
-        // 현재 셀이 비어 있고 아직 드러나지 않았음 -> 인접셀 표시
         if (state.gameMap[row][col].value === 0 && !state.gameMap[row][col].isOpen) {
           state.gameMap[row][col].isOpen = true;
 
           for (let i = row - 1; i <= row + 1; i++) {
             for (let j = col - 1; j <= col + 1; j++) {
-              // 범위 밖인 경우 skip
               if (i < 0 || i >= state.gameMap.length || j < 0 || j >= state.gameMap[0].length) continue;
-              // 현재 셀의 경우 skip
               if (i === row && j === col) continue;
-
               openCell(i, j);
             }
           }
@@ -78,11 +91,15 @@ const gameSlice = createSlice({
           state.gameMap[row][col].isOpen = true;
         }
       };
+
       if (!state.gameMap[clickedXPos][clickedYPos].isOpen) {
         openCell(clickedXPos, clickedYPos);
       }
     },
 
+    /**
+     * @summary 셀 오픈 및 깃발 꽂기
+     */
     flagCell(state, action) {
       const { clickedXPos, clickedYPos } = action.payload;
       if (!state.gameMap[clickedXPos][clickedYPos].isOpen) {

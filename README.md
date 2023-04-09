@@ -1,15 +1,19 @@
 # Minesweeper
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1d1f3e64-c45c-407f-831e-743bdbfe8f2e/deploy-status)](https://app.netlify.com/sites/classum-02-minesweeper-jiheon788/deploys)
 
-<img src='https://user-images.githubusercontent.com/90181028/230784312-31df3f63-fa46-4d73-b2cc-202b5068b4e3.png' align='right' width='18%'>
+<img src='https://user-images.githubusercontent.com/90181028/230784312-31df3f63-fa46-4d73-b2cc-202b5068b4e3.png' align='right' width='20%'>
 
 ## [Demo](https://classum-02-minesweeper-jiheon788.netlify.app)&nbsp;&nbsp;&nbsp;&nbsp;[Requirements Spec](./REQUIREMENTS.md)
 
 
-It's a Minesweeper Game implementation project. All requirements have been complied with. Created from a [Custom CRA + TypeScript template](https://github.com/jiheon788/react-boilerplate) for frequently used Path Alias, Dynamic Routing, eslint, and Prettier settings.
+It's a **Minesweeper Game** implementation project. All requirements have been complied with. Created from a [Custom CRA + TypeScript template](https://github.com/jiheon788/react-boilerplate) for frequently used Path Alias, Dynamic Routing, eslint, and Prettier settings.
 
+A brief comment description has been added to the main logic code.
 
-<br />
+- [src/store/slices/gameSlice.ts](./src/store/slices/gameSlice.ts)
+- [src/utils/generator.ts](./src/utils/generator.ts)
+- [src/utils/gameHelper.ts](./src/utils/gameHelper.ts)
+
 
 ## Getting Started
 
@@ -30,15 +34,15 @@ npm start
 
 ## Features
 
-- Change the level using a query string custom hook (Beginner, Intermediate, Expert)
+- Change the level using a query string Custom hook (Beginner, Intermediate, Expert)
 - Recursive mine detection (left click)
 - Flagging a mine cell (right click)
 - Game timer
-- Custom game config (width, height, ratio of mine)
+- Custom game config using Custom hook (width, height, ratio of mine)
 
 ## Tech stack
 
-`React`, `TypeScript`, `Redux-toolkit`, `sass`
+`React`, `TypeScript`, `Redux-toolkit`, `sass`, `react-router-dom`, `craco`
 
 ## Flow
 
@@ -49,11 +53,11 @@ npm start
 ```bash
 src
 ├─components 
-├─meta # meta dera
-├─pages # page components
-├─store # redux store
+├─meta 
+├─pages 
+├─store 
 │  └─slices
-├─styles # sass
+├─styles 
 │  └─base
-└─utils # unit func
+└─utils
 ```

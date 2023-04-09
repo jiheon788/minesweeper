@@ -13,15 +13,10 @@ const useQueryString = () => {
     setSearchParams(searchParams);
   };
 
-  const deleteAllParams = () => {
-    setSearchParams('');
-  };
-
   return {
     searchParams,
     getParams,
     setParams,
-    deleteAllParams,
   };
 };
 
