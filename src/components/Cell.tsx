@@ -1,24 +1,16 @@
-import { useState } from 'react';
-import { useAppDispatch, useAppSelector } from '@/store';
-
 interface ICellProps {
-  row: number;
-  col: number;
+  value: number;
 }
 
-const Cell = ({ row, col }: ICellProps) => {
-  // const { status, value } = useAppSelector((state) => state.gameData.gameMap[row][col]);
-  // switch (status) {
-  //   case 0:
-  //     return <>{value}</>;
-  //   case 1:
-  //     return <>💣</>;
-  //   case 2:
-  //   case 3:
-  //     return <>🚩</>;
-  //   default:
-  //     return <></>;
-  // }
+const Cell = ({ value }: ICellProps) => {
+  switch (value) {
+    case -2:
+      return <>💣</>;
+    case 0:
+      return <></>;
+    default:
+      return <>{value}</>;
+  }
 };
 
 export default Cell;

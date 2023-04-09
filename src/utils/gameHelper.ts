@@ -24,6 +24,8 @@ export const setRandomMine = (gameMap: ICell[][], clickedXPos: number, clickedYP
 
 export const getNumOfMine = (gameMap: ICell[][], clickedXPos: number, clickedYPos: number) => {
   const pseudoGameMap = generatePseudoMap(gameMap);
+  // const pseudoGameMap = JSON.parse(JSON.stringify(gameMap));
+
   const getBoardCells = (row: number, col: number) => {
     const boardCells: number[] = [];
 

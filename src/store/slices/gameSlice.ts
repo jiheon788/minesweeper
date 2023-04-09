@@ -42,37 +42,33 @@ const gameSlice = createSlice({
       const { clickedXPos, clickedYPos } = action.payload;
 
       const openCell = (row: number, col: number) => {
-        const cell = state.gameMap[row][col];
-
+        // 현재 셀이 지뢰인 경우
         if (state.gameMap[row][col].value === -2) {
-          return 0;
+          state.gameStatus = 'LOSE';
+          state.gameMap.forEach((cells) => {
+            cells.forEach((cell) => {
+              cell.isOpen = true;
+            });
+          });
+          return;
         }
 
-        const numRows = state.gameMap.length;
-        const numCols = state.gameMap[0].length;
+        // 현재 셀이 비어 있고 아직 드러나지 않았음 -> 인접셀 표시
+        if (state.gameMap[row][col].value === 0 && !state.gameMap[row][col].isOpen) {
+          state.gameMap[row][col].isOpen = true;
 
-        if (cell.value === 0 && !cell.isOpen) {
-          // The current cell is empty and hasn't been revealed yet, so reveal it and its adjacent cells
-          cell.isOpen = true;
-
-          // Check all adjacent cells
           for (let i = row - 1; i <= row + 1; i++) {
             for (let j = col - 1; j <= col + 1; j++) {
-              // Skip cells that are outside the game board
-              if (i < 0 || i >= numRows || j < 0 || j >= numCols) {
-                continue;
-              }
-
-              // Skip the current cell
-              if (i === row && j === col) {
-                continue;
-              }
+              // 범위 밖인 경우 skip
+              if (i < 0 || i >= state.gameMap.length || j < 0 || j >= state.gameMap[0].length) continue;
+              // 현재 셀의 경우 skip
+              if (i === row && j === col) continue;
 
               openCell(i, j);
             }
           }
-        } else if (cell.value > 0 && !cell.isOpen) {
-          cell.isOpen = true;
+        } else if (state.gameMap[row][col].value > 0 && !state.gameMap[row][col].isOpen) {
+          state.gameMap[row][col].isOpen = true;
         }
       };
 

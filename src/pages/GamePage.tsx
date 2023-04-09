@@ -70,7 +70,7 @@ const GamePage = () => {
                           e.preventDefault();
                         }}
                       >
-                        {cell.isOpen && cell.value}
+                        {cell.isOpen && <Cell value={cell.value} />}
                       </button>
                     </td>
                   );
