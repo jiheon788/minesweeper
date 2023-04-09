@@ -60,20 +60,20 @@ const GameController = () => {
         </select>
       </div>
       {getParams('mode') === 'custom' ? (
-        <form onSubmit={onStartCustom}>
+        <form className="custom-form" onSubmit={onStartCustom}>
           <label>
             {' '}
-            width:
+            Width:
             <input type="number" name="width" min="1" defaultValue={gameConfig.width} onChange={onChangeGameConfig} />
           </label>
           <label>
             {' '}
-            height:
+            Height:
             <input type="number" name="height" min="1" defaultValue={gameConfig.height} onChange={onChangeGameConfig} />
           </label>
           <label>
             {' '}
-            ratio of mine:
+            Rate of mine:
             <input
               type="number"
               name="ratio"
@@ -84,8 +84,9 @@ const GameController = () => {
               onChange={onChangeGameConfig}
             />
           </label>
-          <br />
-          <button type="submit">Reset</button>
+          <button type="submit" className="button has-border">
+            Reset
+          </button>
         </form>
       ) : (
         <></>

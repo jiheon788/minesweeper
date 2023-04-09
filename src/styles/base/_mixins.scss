@@ -1,6 +1,10 @@
-@mixin center {
+@mixin col-center {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+@mixin border {
+  border: 2px solid darken($grey-color, 50%);
 }
