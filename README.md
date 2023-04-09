@@ -34,10 +34,11 @@ npm start
 
 ## Features
 
+- CRU- Game board
 - Change the level using a query string Custom hook (Beginner, Intermediate, Expert)
 - Recursive mine detection (left click)
 - Flagging a mine cell (right click)
-- Game timer
+- Game timer (result of the game)
 - Custom game config using Custom hook (width, height, ratio of mine)
 
 ## Tech stack

@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { clickCell, flagCell, startGame } from '@/store/slices/gameSlice';
+import { clickCell, endGame, flagCell, startGame } from '@/store/slices/gameSlice';
 import Cell from '@/components/Cell';
 
 const GameTable = () => {
@@ -17,6 +18,19 @@ const GameTable = () => {
     }
     dispatch(clickCell({ clickedXPos: row, clickedYPos: col }));
   };
+
+  useEffect(() => {
+    let countOfOpenedCell = 0;
+    gameMap.forEach((cells) => {
+      cells.forEach((cell) => {
+        if (cell.isOpen) countOfOpenedCell += 1;
+      });
+    });
+
+    if (countOfOpenedCell === gameMap.length * gameMap[0].length && gameStatus === 'PROGRESS') {
+      dispatch(endGame());
+    }
+  }, [gameMap]);
 
   const onRightClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: number, col: number) => {
     e.preventDefault();

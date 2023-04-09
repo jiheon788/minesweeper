@@ -10,7 +10,7 @@ export interface ICell {
 
 export interface IState {
   gameMap: ICell[][];
-  gameStatus: string;
+  gameStatus: 'READY' | 'PROGRESS' | 'LOSE' | 'WIN';
   ratio: number;
 }
 
@@ -107,9 +107,16 @@ const gameSlice = createSlice({
         state.gameMap[clickedXPos][clickedYPos].value = CellStatus.FLAG;
       }
     },
+
+    /**
+     * @summary 호출 시 게임 승리
+     */
+    endGame(state) {
+      state.gameStatus = 'WIN';
+    },
   },
 });
 
-export const { initMap, customMap, clickCell, startGame, flagCell } = gameSlice.actions;
+export const { initMap, customMap, clickCell, startGame, flagCell, endGame } = gameSlice.actions;
 
 export default gameSlice.reducer;
