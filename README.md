@@ -3,16 +3,17 @@
 
 <img src='https://user-images.githubusercontent.com/90181028/230784312-31df3f63-fa46-4d73-b2cc-202b5068b4e3.png' align='right' width='18%'>
 
-## [Demo](https://classum-02-minesweeper-jiheon788.netlify.app)&nbsp;&nbsp;&nbsp;&nbsp;[요구 사항 목록](./REQUIREMENTS.md)
+## [Demo](https://classum-02-minesweeper-jiheon788.netlify.app)&nbsp;&nbsp;&nbsp;&nbsp;[Requirements Spec](./REQUIREMENTS.md)
 
 
-지뢰찾기 게임 구현 프로젝트입니다. 요구사항을 모두 준수하였습니다. 자주 사용하는 Path Alias, Dynamic Routing, eslint, prettier 설정 등을 위해 [Custom CRA + TypeScript 템플릿](https://github.com/jiheon788/react-boilerplate)으로 제작되었습니다.
+It's a Minesweeper Game implementation project. All requirements have been complied with. Created from a [Custom CRA + TypeScript template](https://github.com/jiheon788/react-boilerplate) for frequently used Path Alias, Dynamic Routing, eslint, and Prettier settings.
+
 
 <br />
 
 ## Getting Started
 
-아래 명령어를 따라 직접 설치 및 실행할 수 있습니다. 또는 [라이브 데모](https://classum-02-minesweeper-jiheon788.netlify.app)에서 확인 가능합니다. 
+You can install and run it yourself by following the commands. Or You can view a [live demo](https://classum-02-minesweeper-jiheon788.netlify.app) 
 
 #### Install
 ```
@@ -29,16 +30,17 @@ npm start
 
 ## Features
 
-- 난이도 변경 (Beginner (8X8), Intermediate (16X16), Expert (32X16))
-- 좌클릭(지뢰탐지) & 우클릭(깃발)
-- 게임 타이머
+- Change the level using a query string custom hook (Beginner, Intermediate, Expert)
+- Recursive mine detection (left click)
+- Flagging a mine cell (right click)
+- Game timer
+- Custom game config (width, height, ratio of mine)
 
 ## Tech stack
 
 `React`, `TypeScript`, `Redux-toolkit`, `sass`
 
 ## Flow
-아래 다이어그램의 Flow로 동작합니다.
 
 ![mine drawio (1)](https://user-images.githubusercontent.com/90181028/230780040-0454a883-41c1-41b2-86a5-32a765cadeda.png)
 
@@ -46,14 +48,12 @@ npm start
 
 ```bash
 src
-├─assets
-├─components
-├─constants
-├─meta
-├─pages
-├─store
+├─components 
+├─meta # meta dera
+├─pages # page components
+├─store # redux store
 │  └─slices
-├─styles
+├─styles # sass
 │  └─base
-└─utils
+└─utils # unit func
 ```
