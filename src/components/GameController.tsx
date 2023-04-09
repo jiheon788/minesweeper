@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { initMap } from '@/store/slices/gameSlice';
 import { GameStatus, ModeMeta } from '@/meta/GameMeta';
+import useQueryString from '@/hooks/useQueryString';
 
 const GameController = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { searchParams, getParams, setParams } = useQueryString();
   const { gameStatus } = useAppSelector((state) => state.gameData);
   const dispatch = useAppDispatch();
   const [time, setTime] = useState(0);
 
   const onInit = () => {
-    const mode = searchParams.get('mode');
+    const mode = getParams('mode');
     dispatch(initMap({ mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0] }));
     setTime(0);
   };
@@ -35,13 +35,7 @@ const GameController = () => {
       <button type="button" className="button" onClick={onInit}>
         {GameStatus[gameStatus as keyof typeof GameStatus]}
       </button>
-      <select
-        onChange={(e) => {
-          searchParams.set('mode', e.target.value.toLowerCase());
-          setSearchParams(searchParams);
-        }}
-        defaultValue={Object.keys(ModeMeta)[0]}
-      >
+      <select onChange={(e) => setParams('mode', e.target.value.toLowerCase())} defaultValue={Object.keys(ModeMeta)[0]}>
         {Object.keys(ModeMeta).map((mode) => (
           <option key={mode} value={mode}>
             {mode}

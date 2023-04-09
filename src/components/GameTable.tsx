@@ -1,17 +1,17 @@
-import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { clickCell, flagCell, startGame } from '@/store/slices/gameSlice';
 import { ModeMeta } from '@/meta/GameMeta';
 import Cell from '@/components/Cell';
+import useQueryString from '@/hooks/useQueryString';
 
 const GameTable = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { getParams } = useQueryString();
   const { gameMap, gameStatus } = useAppSelector((state) => state.gameData);
   const dispatch = useAppDispatch();
 
   const onLeftClick = (row: number, col: number) => {
     if (gameStatus === 'READY') {
-      const mode = searchParams.get('mode');
+      const mode = getParams('mode');
       dispatch(
         startGame({
           clickedXPos: row,

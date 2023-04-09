@@ -17,6 +17,7 @@ export const ModeMeta = {
   BEGINNER: { width: 8, height: 8, ratio: 0.1 },
   INTERMEDIATE: { width: 16, height: 16, ratio: 0.15 },
   EXPERT: { width: 32, height: 16, ratio: 0.2 },
+  CUSTOM: { width: 0, height: 0, ratio: 0 },
 };
 
 export type ModeType = keyof typeof ModeMeta;
