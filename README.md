@@ -1,9 +1,14 @@
 # Minesweeper
 [![Netlify Status](https://api.netlify.com/api/v1/badges/1d1f3e64-c45c-407f-831e-743bdbfe8f2e/deploy-status)](https://app.netlify.com/sites/classum-02-minesweeper-jiheon788/deploys)
 
+<img src='https://user-images.githubusercontent.com/90181028/230784312-31df3f63-fa46-4d73-b2cc-202b5068b4e3.png' align='right' width='18%'>
+
 ## [Demo](https://classum-02-minesweeper-jiheon788.netlify.app)&nbsp;&nbsp;&nbsp;&nbsp;[요구 사항 목록](./REQUIREMENTS.md)
 
+
 지뢰찾기 게임 구현 프로젝트입니다. 요구사항을 모두 준수하였습니다. 자주 사용하는 Path Alias, Dynamic Routing, eslint, prettier 설정 등을 위해 [Custom CRA + TypeScript 템플릿](https://github.com/jiheon788/react-boilerplate)으로 제작되었습니다.
+
+<br />
 
 ## Getting Started
 
