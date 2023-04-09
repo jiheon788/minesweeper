@@ -11,29 +11,38 @@ export interface ICell {
 export interface IState {
   gameMap: ICell[][];
   gameStatus: string;
+  ratio: number;
 }
 
 const initialState = {
   gameMap: [[{ isOpen: false, value: CellStatus.INITIAL }]],
   gameStatus: 'READY',
+  ratio: 0.1,
 };
 
 const gameSlice = createSlice({
   name: 'gameData',
   initialState,
   reducers: {
-    initMap(state, actions) {
-      const { mode } = actions.payload;
+    initMap(state, action) {
+      const { mode } = action.payload;
       const width = ModeMeta[mode as keyof typeof ModeMeta].width;
       const height = ModeMeta[mode as keyof typeof ModeMeta].height;
+      state.ratio = ModeMeta[mode as keyof typeof ModeMeta].ratio;
+      state.gameMap = generateGameMap(width, height);
+      state.gameStatus = 'READY';
+    },
+
+    customMap(state, action) {
+      const { width, height, ratio } = action.payload;
+      state.ratio = ratio;
       state.gameMap = generateGameMap(width, height);
       state.gameStatus = 'READY';
     },
 
     startGame(state, action) {
-      const { clickedXPos, clickedYPos, mode } = action.payload;
-      const ratio = ModeMeta[mode as keyof typeof ModeMeta].ratio;
-      state.gameMap = setRandomMine(state.gameMap, clickedXPos, clickedYPos, ratio);
+      const { clickedXPos, clickedYPos } = action.payload;
+      state.gameMap = setRandomMine(state.gameMap, clickedXPos, clickedYPos, state.ratio);
       state.gameStatus = 'PROGRESS';
     },
 
@@ -84,6 +93,6 @@ const gameSlice = createSlice({
   },
 });
 
-export const { initMap, clickCell, startGame, flagCell } = gameSlice.actions;
+export const { initMap, customMap, clickCell, startGame, flagCell } = gameSlice.actions;
 
 export default gameSlice.reducer;

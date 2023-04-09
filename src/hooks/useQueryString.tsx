@@ -1,5 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
-type paramsKeyType = 'mode';
+type paramsKeyType = 'mode' | 'w' | 'h' | 'm';
 
 const useQueryString = () => {
   const [searchParams, setSearchParams] = useSearchParams();
