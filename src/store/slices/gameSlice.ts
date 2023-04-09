@@ -1,10 +1,25 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { generateGameMap } from '@/utils/generator';
 import { CellStatus, ModeMeta } from '@/meta/GameMeta';
-import { getNumOfMine, setRandomMine } from '@/utils/gameHelper';
+import { getNumOfMine, openCell, setRandomMine } from '@/utils/gameHelper';
+
+export interface ICell {
+  value: any;
+  status: number;
+  isOpen: boolean;
+}
+
+export interface IState {
+  gameMap: {
+    status: number;
+    isOpen: boolean;
+    value: number;
+  }[][];
+  gameStatus: string;
+}
 
 const initialState = {
-  gameMap: [[0]],
+  gameMap: [[{ status: 0, isOpen: false, value: 0 }]],
   gameStatus: 'PROGRESS',
 };
 
@@ -27,13 +42,7 @@ const gameSlice = createSlice({
 
     clickCell(state, action) {
       const { clickedXPos, clickedYPos } = action.payload;
-
-      if (state.gameMap[clickedXPos][clickedYPos] === CellStatus.MINE_UNCLICKED) {
-        state.gameMap[clickedXPos][clickedYPos] = CellStatus.MINE_CLICKED;
-        state.gameStatus = 'LOSE';
-      } else {
-        state.gameMap[clickedXPos][clickedYPos] = CellStatus.NORMAL_CLICKED;
-      }
+      state.gameMap = openCell(state.gameMap, clickedXPos, clickedYPos);
     },
 
     endGame(state, actions) {

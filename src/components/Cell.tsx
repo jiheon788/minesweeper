@@ -1,34 +1,26 @@
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { getNumOfMine, isClicked, isMine } from '@/utils/gameHelper';
 
 interface ICellProps {
   row: number;
   col: number;
-  text: string | number;
-  onClickCell: (row: number, col: number) => void;
 }
 
-const Cell = ({ row, col, text, onClickCell }: ICellProps) => {
-  const [isClick, setIsClick] = useState(false);
-  return (
-    <td key={`${row}x${col}`}>
-      <button
-        type="button"
-        className="button"
-        onClick={() => {
-          if (!isClick) {
-            onClickCell(row, col);
-            setIsClick(true);
-          }
-        }}
-        onContextMenu={(e) => {
-          e.preventDefault();
-        }}
-      >
-        {isClick && text}
-      </button>
-    </td>
-  );
+const Cell = ({ row, col }: ICellProps) => {
+  const { status, value } = useAppSelector((state) => state.gameData.gameMap[row][col]);
+
+  switch (status) {
+    case 0:
+      return <>{value}</>;
+    case 1:
+      return <>💣</>;
+    case 2:
+    case 3:
+      return <>🚩</>;
+    default:
+      return <></>;
+  }
 };
 
 export default Cell;

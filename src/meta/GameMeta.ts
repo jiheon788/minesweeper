@@ -8,7 +8,7 @@ export const CellStatus = {
   MINE_CLICKED: 1,
 
   NORMAL_FLAGED: 2,
-  MINE_FLAGED: 2,
+  MINE_FLAGED: 3,
 };
 
 export const ModeMeta = {

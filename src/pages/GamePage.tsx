@@ -28,6 +28,7 @@ const GamePage = () => {
           mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0],
         }),
       );
+
       setIsStart(true);
     }
 
@@ -59,13 +60,20 @@ const GamePage = () => {
               <tr key={row}>
                 {cells.map((cell, col) => {
                   return (
-                    <Cell
-                      key={`${row}x${col}`}
-                      row={row}
-                      col={col}
-                      text={isMine(cell) ? '💣' : getNumOfMine(gameMap, row, col)}
-                      onClickCell={onClickCell}
-                    />
+                    <td key={`${row}x${col}`}>
+                      <button
+                        type="button"
+                        className="button"
+                        onClick={() => {
+                          onClickCell(row, col);
+                        }}
+                        onContextMenu={(e) => {
+                          e.preventDefault();
+                        }}
+                      >
+                        {cell.isOpen && <Cell row={row} col={col} />}
+                      </button>
+                    </td>
                   );
                 })}
               </tr>
@@ -84,7 +92,7 @@ const GamePage = () => {
                   return (
                     <td key={`${row}x${col}`}>
                       <button type="button" className="button">
-                        {cell}
+                        {cell.status}
                       </button>
                     </td>
                   );
