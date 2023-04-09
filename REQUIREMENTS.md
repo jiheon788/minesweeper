@@ -13,6 +13,6 @@
     - [x] Beginner (8X8), Intermediate (16X16), Expert (32X16)
 
 ## Optional Requirements
-- [ ] 게임 타이머 (게임 클리어 시간 확인)
+- [x] 게임 타이머 (게임 클리어 시간 확인)
 - [ ] 게임 Custom (가로, 세로, 지뢰 수 조정 가능)
 - [ ] 오른쪽 클릭 깃발 기능(좌클릭 막힘)

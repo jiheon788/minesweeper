@@ -6,10 +6,20 @@ import { CellStatus, GameStatus, ModeMeta } from '@/meta/GameMeta';
 import Cell from '@/components/Cell';
 
 const GamePage = () => {
+  const [time, setTime] = useState(0);
   const [isStart, setIsStart] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { gameMap, gameStatus } = useAppSelector((state) => state.gameData);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (gameStatus === 'PROGRESS') {
+      const timer = setInterval(() => {
+        setTime(time + 1);
+      }, 1000);
+      return () => clearInterval(timer);
+    }
+  }, [time, gameStatus]);
 
   const onInit = () => {
     const mode = searchParams.get('mode');
@@ -41,7 +51,7 @@ const GamePage = () => {
   return (
     <>
       <div className="game-status">
-        <div className="timer">000</div>
+        <div className="timer">{time}</div>
         <button type="button" className="button" onClick={onInit}>
           {GameStatus[gameStatus as keyof typeof GameStatus]}
         </button>

@@ -18,7 +18,7 @@ export interface IState {
 
 const initialState = {
   gameMap: [[{ isOpen: false, value: 0 }]],
-  gameStatus: 'PROGRESS',
+  gameStatus: 'READY',
 };
 
 const gameSlice = createSlice({
@@ -36,6 +36,7 @@ const gameSlice = createSlice({
       const { clickedXPos, clickedYPos, mode } = action.payload;
       const ratio = ModeMeta[mode as keyof typeof ModeMeta].ratio;
       state.gameMap = setRandomMine(state.gameMap, clickedXPos, clickedYPos, ratio);
+      state.gameStatus = 'PROGRESS';
     },
 
     clickCell(state, action) {
