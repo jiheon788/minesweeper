@@ -1,14 +1,16 @@
+import { CellStatus } from '@/meta/GameMeta';
+
 interface ICellProps {
   value: number;
 }
 
 const Cell = ({ value }: ICellProps) => {
   switch (value) {
-    case -99:
+    case CellStatus.FLAG:
       return <>🚩</>;
-    case -2:
+    case CellStatus.MINE:
       return <>💣</>;
-    case 0:
+    case CellStatus.EMPTY:
       return <></>;
     default:
       return <>{value}</>;

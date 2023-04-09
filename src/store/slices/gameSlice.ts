@@ -14,7 +14,7 @@ export interface IState {
 }
 
 const initialState = {
-  gameMap: [[{ isOpen: false, value: 0 }]],
+  gameMap: [[{ isOpen: false, value: CellStatus.INITIAL }]],
   gameStatus: 'READY',
 };
 
@@ -41,8 +41,7 @@ const gameSlice = createSlice({
       const { clickedXPos, clickedYPos } = action.payload;
 
       const openCell = (row: number, col: number) => {
-        // 현재 셀이 지뢰인 경우
-        if (state.gameMap[row][col].value === -2) {
+        if (state.gameMap[row][col].value === CellStatus.MINE) {
           state.gameStatus = 'LOSE';
           state.gameMap.forEach((cells) => {
             cells.forEach((cell) => {
@@ -79,7 +78,7 @@ const gameSlice = createSlice({
       const { clickedXPos, clickedYPos } = action.payload;
       if (!state.gameMap[clickedXPos][clickedYPos].isOpen) {
         state.gameMap[clickedXPos][clickedYPos].isOpen = true;
-        state.gameMap[clickedXPos][clickedYPos].value = -99;
+        state.gameMap[clickedXPos][clickedYPos].value = CellStatus.FLAG;
       }
     },
   },

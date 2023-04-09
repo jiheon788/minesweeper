@@ -13,7 +13,7 @@ body, html {
 
 table {
   border-spacing: 1px;
-  box-shadow: 1px 1px 0px 2px darken($grey-color, 30%);
+  box-shadow: 0px 0px 0px 2px darken($grey-color, 30%);
 }
 
 .cell-button {
@@ -23,7 +23,7 @@ table {
   box-shadow: 1px 1px 3px 1px darken($grey-color, 50%);
 
   &.is-opened {
-    background: darken($grey-color, 10%); 
+    background: darken($grey-color, 5%); 
     box-shadow: 1px 1px 3px 1px darken($grey-color, 50%) inset;
   }
 }
@@ -34,6 +34,7 @@ table {
   align-items: center;
   margin-bottom: 2rem;
   gap: 1.5rem;
+  box-shadow: 0px 0px 0px 2px darken($grey-color, 30%);
 }
 
 .button {
@@ -41,7 +42,7 @@ table {
 }
 
 .timer {
-  background-color: #222;
-  padding: .5rem;
-  color: RED;
+  background-color: $dark-color;
+  padding: .5rem 1rem;
+  color: $red-color;
 }

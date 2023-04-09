@@ -4,10 +4,8 @@ import { ICell } from '@/store/slices/gameSlice';
 export const generateGameMap = (width: number, height: number) => {
   return Array(height)
     .fill(0)
-    .map(() => Array(width).fill({ isOpen: false, value: -1 }));
+    .map(() => Array(width).fill({ isOpen: false, value: CellStatus.INITIAL }));
 };
-
-export const generateRandomMine = (ratio: number) => (Math.random() <= ratio ? -2 : -1);
 
 export const generatePseudoMap = (gameMap: ICell[][]) => {
   const pseudoMap = Array.from(Array(gameMap.length + 2), () => Array(gameMap.length + 2).fill(CellStatus.PSEUDO));

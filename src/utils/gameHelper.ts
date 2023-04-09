@@ -1,19 +1,19 @@
 import { CellStatus } from '@/meta/GameMeta';
 import { ICell } from '@/store/slices/gameSlice';
-import { generatePseudoMap, generateRandomMine } from './generator';
+import { generatePseudoMap } from './generator';
 
-export const setRandomMine = (gameMap: ICell[][], clickedXPos: number, clickedYPos: number, ratio: number) => {
+export const setRandomMine = (gameMap: ICell[][], row: number, col: number, ratio: number) => {
   for (let x = 0; x < gameMap.length; x++) {
     for (let y = 0; y < gameMap[0].length; y++) {
-      if (!(clickedXPos === x && clickedYPos === y)) {
-        gameMap[x][y].value = Math.random() <= ratio ? -2 : -1;
+      if (!(row === x && col === y)) {
+        gameMap[x][y].value = Math.random() <= ratio ? CellStatus.MINE : CellStatus.INITIAL;
       }
     }
   }
 
   for (let x = 0; x < gameMap.length; x++) {
     for (let y = 0; y < gameMap[0].length; y++) {
-      if (gameMap[x][y].value !== -2) {
+      if (gameMap[x][y].value !== CellStatus.MINE) {
         gameMap[x][y].value = getNumOfMine(gameMap, x, y);
       }
     }
@@ -22,21 +22,15 @@ export const setRandomMine = (gameMap: ICell[][], clickedXPos: number, clickedYP
   return gameMap;
 };
 
-export const getNumOfMine = (gameMap: ICell[][], clickedXPos: number, clickedYPos: number) => {
+export const getNumOfMine = (gameMap: ICell[][], row: number, col: number) => {
   const pseudoGameMap = generatePseudoMap(gameMap);
-  // const pseudoGameMap = JSON.parse(JSON.stringify(gameMap));
+  const boardCells: number[] = [];
 
-  const getBoardCells = (row: number, col: number) => {
-    const boardCells: number[] = [];
-
-    for (let i = row - 1; i <= row + 1; i++) {
-      for (let j = col - 1; j <= col + 1; j++) {
-        boardCells.push(pseudoGameMap[i][j]);
-      }
+  for (let i = row; i <= row + 2; i++) {
+    for (let j = col; j <= col + 2; j++) {
+      boardCells.push(pseudoGameMap[i][j]);
     }
+  }
 
-    return boardCells;
-  };
-
-  return getBoardCells(clickedXPos + 1, clickedYPos + 1).filter((cell) => cell === -2).length;
+  return boardCells.filter((cell) => cell === CellStatus.MINE).length;
 };

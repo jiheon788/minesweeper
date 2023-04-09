@@ -1,14 +1,16 @@
 export const CellStatus = {
+  FLAG: -99,
   PSEUDO: -9,
+  MINE: -2,
+  INITIAL: -1,
+  EMPTY: 0,
+};
 
-  NORMAL_UNCLICKED: -2,
-  MINE_UNCLICKED: -1,
-
-  NORMAL_CLICKED: 0,
-  MINE_CLICKED: 1,
-
-  NORMAL_FLAGED: 2,
-  MINE_FLAGED: 3,
+export const GameStatus = {
+  READY: '🏁',
+  PROGRESS: '😀',
+  LOSE: '😂',
+  WIN: '🎉',
 };
 
 export const ModeMeta = {
@@ -18,10 +20,3 @@ export const ModeMeta = {
 };
 
 export type ModeType = keyof typeof ModeMeta;
-
-export const GameStatus = {
-  READY: '🏁',
-  PROGRESS: '😀',
-  LOSE: '😂',
-  WIN: '🎉',
-};
