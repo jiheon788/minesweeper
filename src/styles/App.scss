@@ -3,22 +3,46 @@
 @import './base/mixins';
 @import './base/variables';
 
+body, html {
+  background-color: $grey-color;
+}
 .wrapper {
   height: 100vh;
   @include center;
 }
 
-.button {
+table {
+  border-spacing: 1px;
+  box-shadow: 1px 1px 0px 2px darken($grey-color, 30%);
+}
+
+.cell-button {
   width: 2rem;
   height: 2rem;
-  border: $dark-color solid 2px;
   background-color: $grey-color;
+  box-shadow: 1px 1px 3px 1px darken($grey-color, 50%);
 
-  &:hover {
-    background: lighten($grey-color, 10%); // 색상 10% 밝게
+  &.is-opened {
+    background: darken($grey-color, 10%); 
+    box-shadow: 1px 1px 3px 1px darken($grey-color, 50%) inset;
   }
+}
 
-  &:active {
-    background: darken($grey-color, 10%); // 색상 10% 어둡게
-  }
+.game-status {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1.5rem;
+}
+
+.button {
+  padding: .5rem;
+}
+
+.timer {
+  background-color: #222;
+  padding: .5rem;
+  color: RED;
+
 }

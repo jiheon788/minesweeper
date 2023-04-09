@@ -11,10 +11,14 @@ const GamePage = () => {
   const { gameMap, gameStatus } = useAppSelector((state) => state.gameData);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
+  const onInit = () => {
     const mode = searchParams.get('mode');
     dispatch(initMap({ mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0] }));
     setIsStart(false);
+  };
+
+  useEffect(() => {
+    onInit();
   }, [searchParams, dispatch]);
 
   const onClickCell = (row: number, col: number) => {
@@ -36,8 +40,12 @@ const GamePage = () => {
 
   return (
     <>
-      <div>
-        <button>{GameStatus[gameStatus as keyof typeof GameStatus]}</button>
+      <div className="game-status">
+        <div className="timer">000</div>
+        <button type="button" className="button" onClick={onInit}>
+          {GameStatus[gameStatus as keyof typeof GameStatus]}
+        </button>
+
         <select
           onChange={(e) => {
             searchParams.set('mode', e.target.value.toLowerCase());
@@ -62,7 +70,7 @@ const GamePage = () => {
                     <td key={`${row}x${col}`}>
                       <button
                         type="button"
-                        className="button"
+                        className={`cell-button ${cell.isOpen ? 'is-opened' : ''}`}
                         onClick={() => {
                           onClickCell(row, col);
                         }}
@@ -71,27 +79,6 @@ const GamePage = () => {
                         }}
                       >
                         {cell.isOpen && <Cell value={cell.value} />}
-                      </button>
-                    </td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-
-      <h1>Test</h1>
-      <table>
-        <tbody>
-          {gameMap.map((cells, row) => {
-            return (
-              <tr key={row}>
-                {cells.map((cell, col) => {
-                  return (
-                    <td key={`${row}x${col}`}>
-                      <button type="button" className="button">
-                        {cell.value}
                       </button>
                     </td>
                   );
