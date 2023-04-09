@@ -1,17 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { generateGameMap } from '@/utils/generator';
 import { CellStatus, ModeMeta } from '@/meta/GameMeta';
-import { getNumOfMine, openCell, setRandomMine } from '@/utils/gameHelper';
+import { setRandomMine } from '@/utils/gameHelper';
 
 export interface ICell {
   value: any;
-  status: number;
   isOpen: boolean;
 }
 
 export interface IState {
   gameMap: {
-    status: number;
     isOpen: boolean;
     value: number;
   }[][];
@@ -19,7 +17,7 @@ export interface IState {
 }
 
 const initialState = {
-  gameMap: [[{ status: 0, isOpen: false, value: 0 }]],
+  gameMap: [[{ isOpen: false, value: 0 }]],
   gameStatus: 'PROGRESS',
 };
 
@@ -42,7 +40,43 @@ const gameSlice = createSlice({
 
     clickCell(state, action) {
       const { clickedXPos, clickedYPos } = action.payload;
-      state.gameMap = openCell(state.gameMap, clickedXPos, clickedYPos);
+
+      const openCell = (row: number, col: number) => {
+        const cell = state.gameMap[row][col];
+
+        if (state.gameMap[row][col].value === -2) {
+          return 0;
+        }
+
+        const numRows = state.gameMap.length;
+        const numCols = state.gameMap[0].length;
+
+        if (cell.value === 0 && !cell.isOpen) {
+          // The current cell is empty and hasn't been revealed yet, so reveal it and its adjacent cells
+          cell.isOpen = true;
+
+          // Check all adjacent cells
+          for (let i = row - 1; i <= row + 1; i++) {
+            for (let j = col - 1; j <= col + 1; j++) {
+              // Skip cells that are outside the game board
+              if (i < 0 || i >= numRows || j < 0 || j >= numCols) {
+                continue;
+              }
+
+              // Skip the current cell
+              if (i === row && j === col) {
+                continue;
+              }
+
+              openCell(i, j);
+            }
+          }
+        } else if (cell.value > 0 && !cell.isOpen) {
+          cell.isOpen = true;
+        }
+      };
+
+      openCell(clickedXPos, clickedYPos);
     },
 
     endGame(state, actions) {

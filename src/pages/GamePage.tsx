@@ -3,7 +3,6 @@ import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { clickCell, initMap, startGame } from '@/store/slices/gameSlice';
 import { CellStatus, GameStatus, ModeMeta } from '@/meta/GameMeta';
-import { getNumOfMine, isClicked, isMine } from '@/utils/gameHelper';
 import Cell from '@/components/Cell';
 
 const GamePage = () => {
@@ -71,7 +70,7 @@ const GamePage = () => {
                           e.preventDefault();
                         }}
                       >
-                        {cell.isOpen && <Cell row={row} col={col} />}
+                        {cell.isOpen && cell.value}
                       </button>
                     </td>
                   );
@@ -92,7 +91,7 @@ const GamePage = () => {
                   return (
                     <td key={`${row}x${col}`}>
                       <button type="button" className="button">
-                        {cell.status}
+                        {cell.value}
                       </button>
                     </td>
                   );
