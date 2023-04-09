@@ -1,13 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@/store';
-import { clickCell, initMap, startGame } from '@/store/slices/gameSlice';
+import { clickCell, flagCell, initMap, startGame } from '@/store/slices/gameSlice';
 import { CellStatus, GameStatus, ModeMeta } from '@/meta/GameMeta';
 import Cell from '@/components/Cell';
 
 const GamePage = () => {
   const [time, setTime] = useState(0);
-  const [isStart, setIsStart] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const { gameMap, gameStatus } = useAppSelector((state) => state.gameData);
   const dispatch = useAppDispatch();
@@ -24,15 +23,15 @@ const GamePage = () => {
   const onInit = () => {
     const mode = searchParams.get('mode');
     dispatch(initMap({ mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0] }));
-    setIsStart(false);
+    setTime(0);
   };
 
   useEffect(() => {
     onInit();
-  }, [searchParams, dispatch]);
+  }, [searchParams]);
 
-  const onClickCell = (row: number, col: number) => {
-    if (!isStart) {
+  const onLeftClick = (row: number, col: number) => {
+    if (gameStatus === 'READY') {
       const mode = searchParams.get('mode');
       dispatch(
         startGame({
@@ -41,11 +40,13 @@ const GamePage = () => {
           mode: mode ? mode.toUpperCase() : Object.keys(ModeMeta)[0],
         }),
       );
-
-      setIsStart(true);
     }
-
     dispatch(clickCell({ clickedXPos: row, clickedYPos: col }));
+  };
+
+  const onRightClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: number, col: number) => {
+    e.preventDefault();
+    dispatch(flagCell({ clickedXPos: row, clickedYPos: col }));
   };
 
   return (
@@ -81,12 +82,8 @@ const GamePage = () => {
                       <button
                         type="button"
                         className={`cell-button ${cell.isOpen ? 'is-opened' : ''}`}
-                        onClick={() => {
-                          onClickCell(row, col);
-                        }}
-                        onContextMenu={(e) => {
-                          e.preventDefault();
-                        }}
+                        onClick={() => onLeftClick(row, col)}
+                        onContextMenu={(e) => onRightClick(e, row, col)}
                       >
                         {cell.isOpen && <Cell value={cell.value} />}
                       </button>

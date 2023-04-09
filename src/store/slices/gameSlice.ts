@@ -4,15 +4,12 @@ import { CellStatus, ModeMeta } from '@/meta/GameMeta';
 import { setRandomMine } from '@/utils/gameHelper';
 
 export interface ICell {
-  value: any;
+  value: number;
   isOpen: boolean;
 }
 
 export interface IState {
-  gameMap: {
-    isOpen: boolean;
-    value: number;
-  }[][];
+  gameMap: ICell[][];
   gameStatus: string;
 }
 
@@ -30,6 +27,7 @@ const gameSlice = createSlice({
       const width = ModeMeta[mode as keyof typeof ModeMeta].width;
       const height = ModeMeta[mode as keyof typeof ModeMeta].height;
       state.gameMap = generateGameMap(width, height);
+      state.gameStatus = 'READY';
     },
 
     startGame(state, action) {
@@ -72,16 +70,21 @@ const gameSlice = createSlice({
           state.gameMap[row][col].isOpen = true;
         }
       };
-
-      openCell(clickedXPos, clickedYPos);
+      if (!state.gameMap[clickedXPos][clickedYPos].isOpen) {
+        openCell(clickedXPos, clickedYPos);
+      }
     },
 
-    endGame(state, actions) {
-      return;
+    flagCell(state, action) {
+      const { clickedXPos, clickedYPos } = action.payload;
+      if (!state.gameMap[clickedXPos][clickedYPos].isOpen) {
+        state.gameMap[clickedXPos][clickedYPos].isOpen = true;
+        state.gameMap[clickedXPos][clickedYPos].value = -99;
+      }
     },
   },
 });
 
-export const { initMap, clickCell, startGame } = gameSlice.actions;
+export const { initMap, clickCell, startGame, flagCell } = gameSlice.actions;
 
 export default gameSlice.reducer;

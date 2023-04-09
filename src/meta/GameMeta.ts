@@ -20,6 +20,7 @@ export const ModeMeta = {
 export type ModeType = keyof typeof ModeMeta;
 
 export const GameStatus = {
+  READY: '🏁',
   PROGRESS: '😀',
   LOSE: '😂',
   WIN: '🎉',

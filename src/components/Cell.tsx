@@ -4,6 +4,8 @@ interface ICellProps {
 
 const Cell = ({ value }: ICellProps) => {
   switch (value) {
+    case -99:
+      return <>🚩</>;
     case -2:
       return <>💣</>;
     case 0:
