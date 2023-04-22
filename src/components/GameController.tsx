@@ -19,6 +19,7 @@ const GameController = () => {
   const onInit = () => {
     const mode = getParams('mode').toUpperCase();
     dispatch(initMap({ mode: mode ? mode : Object.keys(ModeMeta)[0] }));
+    setTime(0);
   };
 
   useEffect(() => {
