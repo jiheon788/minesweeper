@@ -6,7 +6,7 @@
 ## [Demo](https://classum-02-minesweeper-jiheon788.netlify.app)&nbsp;&nbsp;&nbsp;&nbsp;[Requirements Spec](./REQUIREMENTS.md)
 
 
-It's a **Minesweeper Game** implementation project. All requirements have been complied with. Created from a [Custom CRA + TypeScript template](https://github.com/jiheon788/react-boilerplate) for frequently used Path Alias, Dynamic Routing, eslint, and Prettier settings.
+It's a **Minesweeper Game** implementation project that adheres to the All requirements.. Created from a [Custom CRA + TypeScript template](https://github.com/jiheon788/react-boilerplate) for frequently used Path Alias, Dynamic Routing, eslint, and Prettier settings.
 
 A brief comment description has been added to the main logic code.
 
@@ -49,19 +49,6 @@ npm start
 
 ![mine drawio (1)](https://user-images.githubusercontent.com/90181028/230780040-0454a883-41c1-41b2-86a5-32a765cadeda.png)
 
-## Directory
-
-```bash
-src
-├─components 
-├─meta 
-├─pages 
-├─store 
-│  └─slices
-├─styles 
-│  └─base
-└─utils
-```
 
 ## Demo of this project
 
